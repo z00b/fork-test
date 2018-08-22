@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.6-jessie
+    steps:
+      - checkout
+      - restore_cache:
+          key: v3-dependency-cache-{{ checksum "README.md" }}
+      - run:
+          name: something
+          command: echo "hello world"
+      - save_cache:
+          key: v3-dependency-cache-{{ checksum "README.md" }}
+          paths:
+            - "README.md"
+
+workflows:
+  version: 2
+
+  my-workflow:
+    jobs:
+      - test
