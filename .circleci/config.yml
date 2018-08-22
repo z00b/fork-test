@@ -6,12 +6,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v3-dependency-cache-{{ checksum "README.md" }}
+          key: v3-dependency-cache-{{ checksum "CACHEFILE" }}
       - run:
           name: something
           command: echo "hello world"
       - save_cache:
-          key: v3-dependency-cache-{{ checksum "README.md" }}
+          key: v3-dependency-cache-{{ checksum "CACHEFILE" }}
           paths:
             - "README.md"
 
