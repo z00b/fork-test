@@ -28,7 +28,7 @@ jobs:
           at: workspace2
       - run:
           name: test the workspace
-          command: cat workspace2/helloworld.txt
+          command: ls -lat workspace2
 
 workflows:
   version: 2
