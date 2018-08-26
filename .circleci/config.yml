@@ -8,12 +8,27 @@ jobs:
       - restore_cache:
           key: v3-dependency-cache-{{ checksum "CACHEFILE" }}
       - run:
+          name: i have no idea what i'm doing
+          command: mkdir -p workspace
+      - run:
           name: something
-          command: echo "hello world"
+          command: echo "hello world" > workspace/helloworld.txt
+      - persist_to_workspace:
+          root: workspace
+          paths: helloworld.txt
       - save_cache:
           key: v3-dependency-cache-{{ checksum "CACHEFILE" }}
           paths:
             - "README.md"
+  test2:
+    docker:
+      - image: circleci/python:3.6-jessie
+    steps:
+      - attach_workspace:
+          at: workspace2
+      - run:
+          name: test the workspace
+          command: cat workspace2/helloworld.txt
 
 workflows:
   version: 2
@@ -21,3 +36,4 @@ workflows:
   my-workflow:
     jobs:
       - test
+      - test2
